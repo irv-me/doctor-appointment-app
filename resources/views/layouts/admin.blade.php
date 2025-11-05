@@ -26,6 +26,7 @@
     <!-- Styles -->
     @livewireStyles
 </head>
+{{-- Este es el fondo gris de la página --}}
 <body class="font-sans antialiased bg-gray-50">
 @include('layouts.includes.admin.navigation')
 
@@ -35,6 +36,7 @@
     <!-- Margin top 14px -->
     <div class="mt-14">
         @include('layouts.includes.admin.breadcrumb')
+        {{-- Aquí se carga el contenido de la página (index.blade.php) --}}
         {{ $slot }}
     </div>
 </div>
@@ -43,3 +45,4 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 </body>
+</html>

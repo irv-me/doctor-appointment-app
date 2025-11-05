@@ -17,11 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
 
         // Crear un usuario de prueba
-        //php artisan migrate:fresh -seed
         User::factory()->create([
             'name' => 'Nugget de Pollo',
-            'email' => 'estebanpriego2005@gmail.com',
-            'password' => bcrypt('Moguel2005'),
+            'email' => 'ianrelloso@gmail.com',
+            'password' => bcrypt('moguel'),
         ]);
-    }
-}
+    }}
