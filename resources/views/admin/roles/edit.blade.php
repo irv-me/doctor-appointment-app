@@ -25,9 +25,11 @@
                 <input type="text" id="name" name="name" value="{{ $role->name }}" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
             </div>
 
-            <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                Update Role
-            </button>
+            <div class="flex justify-end">
+                <button type="submit" class="px-4 py-2 font-bold text-blue-800 bg-blue-200 rounded hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow">
+                    Update Role
+                </button>
+            </div>
         </form>
     </div>
 

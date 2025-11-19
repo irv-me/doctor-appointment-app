@@ -16,7 +16,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5v9m-4.5-4.5h9" />
                     </svg>
-                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Healthify</span>
+                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Hpfy</span>
                 </a>
             </div>
 
@@ -68,7 +68,7 @@
                                     @csrf
 
                                     <x-dropdown-link href="{{ route('logout') }}"
-                                                     @click.prevent="$root.submit();">
+                                                    @click.prevent="$root.submit();">
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </form>
@@ -97,3 +97,4 @@
         </div>
     </div>
 </nav>
+

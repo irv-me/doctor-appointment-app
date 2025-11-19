@@ -20,8 +20,8 @@ $links = [
     [
         'name' => 'Usuarios',
         'icon' => 'fa-solid fa-users',
-        'href' => '#',
-        'active' => false,
+        'href' => route('admin.users.index'),
+        'active' => request()->routeIs('admin.users.*'),
     ],
     [
         'name' => 'Doctores',
