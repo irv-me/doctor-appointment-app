@@ -52,9 +52,12 @@
     48 => 'Spatie\\Permission\\PermissionServiceProvider',
     49 => 'WireUi\\Heroicons\\HeroiconsServiceProvider',
     50 => 'WireUi\\ServiceProvider',
-    51 => 'App\\Providers\\AppServiceProvider',
-    52 => 'App\\Providers\\FortifyServiceProvider',
-    53 => 'App\\Providers\\JetstreamServiceProvider',
+    51 => 'Yajra\\DataTables\\ButtonsServiceProvider',
+    52 => 'Yajra\\DataTables\\HtmlServiceProvider',
+    53 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    54 => 'App\\Providers\\AppServiceProvider',
+    55 => 'App\\Providers\\FortifyServiceProvider',
+    56 => 'App\\Providers\\JetstreamServiceProvider',
   ),
   'eager' => 
   array (
@@ -94,9 +97,12 @@
     33 => 'Spatie\\Permission\\PermissionServiceProvider',
     34 => 'WireUi\\Heroicons\\HeroiconsServiceProvider',
     35 => 'WireUi\\ServiceProvider',
-    36 => 'App\\Providers\\AppServiceProvider',
-    37 => 'App\\Providers\\FortifyServiceProvider',
-    38 => 'App\\Providers\\JetstreamServiceProvider',
+    36 => 'Yajra\\DataTables\\ButtonsServiceProvider',
+    37 => 'Yajra\\DataTables\\HtmlServiceProvider',
+    38 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    39 => 'App\\Providers\\AppServiceProvider',
+    40 => 'App\\Providers\\FortifyServiceProvider',
+    41 => 'App\\Providers\\JetstreamServiceProvider',
   ),
   'deferred' => 
   array (
