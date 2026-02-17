@@ -1,18 +1,23 @@
-@php
-    $title = 'Roles';
-    $breadcrumbs = [
-        ['name' => 'Inicio', 'href' => route('dashboard')],
-        ['name' => 'Roles', 'href' => route('admin.roles.index')],
-    ];
-@endphp
+<x-admin-layout
+    title="Roles | MediMatch"
+    :breadcrumbs="[
+        [
+            'name' => 'Dashboard',
+            'href' => route('admin.dashboard'),
+        ],
+        [
+            'name' => 'Roles',
+        ],
+    ]"
+>
 
-@component('layouts.admin', ['title' => $title, 'breadcrumbs' => $breadcrumbs])
-    <div class="bg-white p-4 rounded shadow">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold">Roles</h2>
-            <a href="{{ route('admin.roles.create') }}" class="inline-block px-3 py-1 bg-blue-600 text-white rounded">Crear rol</a>
-        </div>
+    <x-slot name="action">
+        <x-wire-button blue href="{{ route('admin.roles.create') }}">
+            <i class="fa-solid fa-plus"></i>
+            Nuevo
+        </x-wire-button>
+    </x-slot>
 
-        <livewire:admin.datatables.role-table />
-    </div>
-@endcomponent
+    @livewire('admin.data-tables.user-table')
+
+</x-admin-layout>

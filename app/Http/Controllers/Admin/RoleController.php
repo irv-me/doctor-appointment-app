@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -13,8 +13,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-        return view('admin.roles.index', compact('roles'));
+        return view('admin.roles.index');
     }
 
     /**
@@ -31,23 +30,25 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required|unique:roles,name']);
-        Role::create($request->all());
 
-        session()->flash('swal', [
-            'icon'  => 'success',
-            'title' => 'Rol creado correctamente',
-            'text'  => 'El rol ha sido creado exitosamente'
+        Role::create([
+            'name' => $request->name,
+            'guard_name' => 'web'
         ]);
 
-        return redirect()->route('admin.roles.index')->with('success', '¡Rol creado exitosamente!');
+        return redirect()->route('admin.roles.index')->with('swal', [
+            'icon' => 'success',
+            'title' => 'Rol creado correctamente',
+            'text' => 'El rol ha sido creado exitosamente'
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Role $role)
+    public function show(string $id)
     {
-        // Este método no se usará en este CRUD, se puede dejar vacío.
+        //
     }
 
     /**
@@ -63,9 +64,34 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        // Validar que no sea un rol del sistema
+        if ($role->id <= 4) {
+            return redirect()->route('admin.roles.edit', $role)->with('swal', [
+                'icon' => 'error',
+                'title' => 'Error',
+                'text' => 'No puedes actualizar este rol del sistema'
+            ]);
+        }
+
         $request->validate(['name' => 'required|unique:roles,name,' . $role->id]);
-        $role->update($request->all());
-        return redirect()->route('admin.roles.index')->with('success', '¡Rol actualizado exitosamente!');
+
+        if ($role->name === $request->name) {
+            return redirect()->route('admin.roles.edit', $role)->with('swal', [
+                'icon' => 'info',
+                'title' => 'Sin cambios',
+                'text' => 'No se detectaron modificaciones'
+            ]);
+        }
+
+        $role->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('admin.roles.index')->with('swal', [
+            'icon' => 'success',
+            'title' => 'Rol actualizado correctamente',
+            'text' => 'El rol ha sido actualizado exitosamente'
+        ]);
     }
 
     /**
@@ -73,7 +99,21 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        // Validar que no sea un rol del sistema
+        if ($role->id <= 4) {
+            return redirect()->route('admin.roles.index')->with('swal', [
+                'icon' => 'error',
+                'title' => 'Error',
+                'text' => 'No puedes eliminar este rol del sistema'
+            ]);
+        }
+
         $role->delete();
-        return redirect()->route('admin.roles.index')->with('success', '¡Rol eliminado exitosamente!');
+
+        return redirect()->route('admin.roles.index')->with('swal', [
+            'icon' => 'success',
+            'title' => 'Rol eliminado correctamente',
+            'text' => 'El rol ha sido eliminado exitosamente'
+        ]);
     }
 }

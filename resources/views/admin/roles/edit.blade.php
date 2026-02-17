@@ -1,36 +1,41 @@
-<x-admin-layout 
-    title="Edit Role: {{ $role->name }}"
+<x-admin-layout
+    title="Roles | MediMatch"
     :breadcrumbs="[
         [
             'name' => 'Dashboard',
-            'url'  => route('admin.dashboard')
+            'href' => route('admin.dashboard'),
         ],
         [
             'name' => 'Roles',
-            'url'  => route('admin.roles.index')
+            'href' => route('admin.roles.index'),
         ],
         [
-            'name' => $role->name
-        ]
+            'name' => 'Editar',
+        ],
     ]">
 
-    {{-- Formulario para editar el rol --}}
-    <div class="p-4 bg-white rounded-lg shadow-md">
-        <form action="{{ route('admin.roles.update', $role) }}" method="POST">
-            @csrf {{-- Directiva de seguridad --}}
-            @method('PUT') {{-- Le dice a Laravel que es una actualización --}}
-            
-            <div class="mb-4">
-                <label for="name" class="block mb-2 text-sm font-bold text-gray-700">Role Name</label>
-                <input type="text" id="name" name="name" value="{{ $role->name }}" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
+    @if(session('swal'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire(@json(session('swal')));
+            });
+        </script>
+    @endif
+
+    <x-wire-card>
+        <form action="{{route('admin.roles.update',$role)}}" method="POST">
+            @csrf
+
+            @method('PUT')
+
+            <x-wire-input label="Nombre" name="name" placeholder="Nombre del rol"
+                          value="{{old('name',$role->name)}}">
+            </x-wire-input>
+            <div class="flex justify-end mt-4">
+                <x-wire-button type="submit" blue>Actualizar</x-wire-button>
+
             </div>
 
-            <div class="flex justify-end">
-                <button type="submit" class="px-4 py-2 font-bold text-blue-800 bg-blue-200 rounded hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow">
-                    Update Role
-                </button>
-            </div>
         </form>
-    </div>
-
+    </x-wire-card>
 </x-admin-layout>

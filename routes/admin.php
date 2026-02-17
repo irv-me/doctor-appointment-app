@@ -1,13 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\RoleController; // <-- AÑADE ESTA LÍNEA
-use App\Http\Controllers\Admin\UserController;
 
-Route::get('/', function () {
-    return view(('admin.dashboard'));
+Route::get('/', function(){
+    return view('admin.dashboard');
 })->name('dashboard');
 
-// Gestión de usuarios
-Route::resource('roles', RoleController::class);
-Route::resource('users', UserController::class);
+//gestion de roles
+Route::resource('roles',\App\Http\Controllers\Admin\RoleController::class);
+
+//gestion de usuarios
+Route::resource('users',\App\Http\Controllers\Admin\UserController::class);
+
+//gestion de pacientes
+Route::resource('patients',\App\Http\Controllers\Admin\PatientController::class);

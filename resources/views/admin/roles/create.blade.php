@@ -1,35 +1,68 @@
-<x-admin-layout 
-    title="Create New Role"
+<x-admin-layout
+    title="Roles | MediMatch"
     :breadcrumbs="[
         [
             'name' => 'Dashboard',
-            'url'  => route('admin.dashboard')
+            'href' => route('admin.dashboard'),
         ],
         [
             'name' => 'Roles',
-            'url'  => route('admin.roles.index')
+            'href' => route('admin.roles.index'),
         ],
         [
-            'name' => 'Create'
-        ]
-    ]">
+            'name' => 'Nuevo',
+        ],
+    ]"
+>
+    <x-wire-card>
+        <form action="{{route('admin.roles.store')}}" method="POST">
+            @csrf
 
-    {{-- Aquí va el contenido del formulario --}}
-    <div class="p-4 bg-white rounded-lg shadow-md">
-        <form action="{{ route('admin.roles.store') }}" method="POST">
-            @csrf {{-- Directiva de seguridad de Laravel --}}
-            
-            <div class="mb-4">
-                <label for="name" class="block mb-2 text-sm font-bold text-gray-700">Role Name</label>
-                <input type="text" id="name" name="name" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
+            <x-wire-input label="Nombre" name="name" placeholder="Nombre del rol"
+            value="{{old('name')}}">
+            </x-wire-input>
+            <div class="flex justify-end mt-4">
+                <x-wire-button type="submit" blue>Guardar</x-wire-button>
+
             </div>
 
-            <div class="flex justify-end">
-                <button type="submit" class="px-4 py-2 font-bold text-blue-800 bg-blue-200 rounded hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow">
-                    Save Role
-                </button>
-            </div>
         </form>
+    </x-wire-card>
+
+    <div class="max-w-3xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <form action="{{ route('admin.roles.store') }}" method="POST">
+                @csrf
+
+                <div class="mb-4">
+                    <x-wire-input
+                        label="Nombre del Rol"
+                        placeholder="Ingrese el nombre del rol"
+                        name="name"
+                        :value="old('name')"
+                        required
+                    />
+                </div>
+
+                <div class="flex justify-end space-x-2">
+                    <x-wire-button
+                        flat
+                        secondary
+                        href="{{ route('admin.roles.index') }}"
+                    >
+                        Cancelar
+                    </x-wire-button>
+
+                    <x-wire-button
+                        type="submit"
+                        primary
+                    >
+                        <i class="fa-solid fa-save"></i>
+                        Guardar
+                    </x-wire-button>
+                </div>
+            </form>
+        </div>
     </div>
 
 </x-admin-layout>

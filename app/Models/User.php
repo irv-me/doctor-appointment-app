@@ -10,10 +10,11 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-
 class User extends Authenticatable
 {
     use HasApiTokens;
+
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
@@ -29,6 +30,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_photo_path',
+        'id_number',
+        'phone',
+        'address',
     ];
 
     /**
@@ -63,5 +68,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //relacion 1:1
+    public function patient()
+    {
+        return $this->hasOne(Patient::class);
     }
 }
