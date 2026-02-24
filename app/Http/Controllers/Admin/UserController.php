@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -74,6 +75,20 @@ class UserController extends Controller
                 ]);
         }
 
+        // Si el rol es Doctor, crear registro en la tabla doctors (relación 1:1)
+        if ($validated['role'] === 'Doctor') {
+            Doctor::create([
+                'user_id' => $user->id,
+            ]);
+
+            return redirect()->route('admin.doctors.index')
+                ->with('swal', [
+                    'title' => 'Doctor creado',
+                    'text' => 'Complete la información profesional del doctor.',
+                    'icon' => 'success',
+                ]);
+        }
+
         // Redirigir con mensaje de éxito
         return redirect()->route('admin.users.index')
             ->with('swal', [
@@ -130,6 +145,13 @@ class UserController extends Controller
         $user->update($userData);
 
         $user->syncRoles($validated['role']);
+
+        // Sincronizar registro en doctors/patients según el rol
+        if ($validated['role'] === 'Doctor') {
+            Doctor::firstOrCreate(['user_id' => $user->id]);
+        } else {
+            Doctor::where('user_id', $user->id)->delete();
+        }
 
         return redirect()->route('admin.users.index')
             ->with('swal', [
