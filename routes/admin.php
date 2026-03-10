@@ -17,3 +17,11 @@ Route::resource('patients',\App\Http\Controllers\Admin\PatientController::class)
 
 //gestion de doctores
 Route::resource('doctors',\App\Http\Controllers\Admin\DoctorController::class)->only(['index','edit','update','destroy']);
+Route::get('doctors/{doctor}/schedules', [\App\Http\Controllers\Admin\DoctorController::class, 'schedules'])
+    ->name('doctors.schedules');
+
+//gestion de citas
+Route::resource('appointments', \App\Http\Controllers\Admin\AppointmentController::class)
+    ->only(['index', 'create', 'store', 'destroy']);
+Route::get('appointments/{appointment}/consult', [\App\Http\Controllers\Admin\AppointmentController::class, 'consult'])
+    ->name('appointments.consult');

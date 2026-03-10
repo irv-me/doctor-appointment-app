@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Patient extends Model
 {
@@ -42,5 +44,21 @@ class Patient extends Model
     public function bloodType(): BelongsTo
     {
         return $this->belongsTo(BloodType::class);
+    }
+
+    /**
+     * Citas del paciente.
+     */
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    /**
+     * Consultas del paciente a través de sus citas.
+     */
+    public function consultations(): HasManyThrough
+    {
+        return $this->hasManyThrough(Consultation::class, Appointment::class);
     }
 }

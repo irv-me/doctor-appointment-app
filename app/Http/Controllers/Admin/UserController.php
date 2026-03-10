@@ -77,15 +77,15 @@ class UserController extends Controller
 
         // Si el rol es Doctor, crear registro en la tabla doctors (relación 1:1)
         if ($validated['role'] === 'Doctor') {
-            Doctor::create([
+            $doctor = Doctor::create([
                 'user_id' => $user->id,
             ]);
 
-            return redirect()->route('admin.doctors.index')
+            return redirect()->route('admin.doctors.edit', $doctor)
                 ->with('swal', [
                     'title' => 'Doctor creado',
-                    'text' => 'Complete la información profesional del doctor.',
-                    'icon' => 'success',
+                    'text'  => 'Complete la información profesional del doctor.',
+                    'icon'  => 'success',
                 ]);
         }
 

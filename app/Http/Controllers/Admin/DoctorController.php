@@ -7,6 +7,7 @@ use App\Models\Doctor;
 use App\Models\Speciality;
 use Illuminate\Http\Request;
 
+
 class DoctorController extends Controller
 {
     public function index()
@@ -34,8 +35,10 @@ class DoctorController extends Controller
 
         $validated = $request->validate([
             'speciality_id'          => 'nullable|integer',
-            'medical_license_number' => 'nullable|string|max:255',
+            'medical_license_number' => 'nullable|alpha_num|max:255',
             'biography'              => 'nullable|string',
+        ], [
+            'medical_license_number.alpha_num' => 'El número de licencia solo puede contener letras y números.',
         ]);
 
         $doctor->update($validated);
@@ -58,5 +61,14 @@ class DoctorController extends Controller
                 'text'  => 'El doctor ha sido eliminado exitosamente.',
                 'icon'  => 'success',
             ]);
+    }
+
+    /**
+     * Show the schedules view for a doctor.
+     */
+    public function schedules(Doctor $doctor)
+    {
+        $doctor->load(['user', 'speciality']);
+        return view('admin.doctors.schedules', compact('doctor'));
     }
 }

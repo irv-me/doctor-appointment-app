@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Doctor extends Model
 {
@@ -12,6 +13,11 @@ class Doctor extends Model
         'speciality_id',
         'medical_license_number',
         'biography',
+        'schedule',
+    ];
+
+    protected $casts = [
+        'schedule' => 'array',
     ];
 
     /**
@@ -28,5 +34,13 @@ class Doctor extends Model
     public function speciality(): BelongsTo
     {
         return $this->belongsTo(Speciality::class);
+    }
+
+    /**
+     * Citas del doctor.
+     */
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
     }
 }

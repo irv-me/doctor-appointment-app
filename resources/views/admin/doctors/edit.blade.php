@@ -81,8 +81,11 @@
                 <x-wire-input
                     label="Número de licencia médica"
                     name="medical_license_number"
-                    placeholder="Número de licencia"
+                    placeholder="Solo letras y números"
                     value="{{ old('medical_license_number', $doctor->medical_license_number) }}"
+                    pattern="[A-Za-z0-9]+"
+                    title="Solo se permiten letras y números"
+                    inputmode="text"
                 >
                 </x-wire-input>
 
