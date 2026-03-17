@@ -26,4 +26,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Execute tests
+        env:
+          CALLMEBOT_URL: https://api.callmebot.com/whatsapp.php
+          QUEUE_CONNECTION: sync
         run: php artisan test

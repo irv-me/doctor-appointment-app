@@ -33,6 +33,7 @@ class User extends Authenticatable
         'profile_photo_path',
         'id_number',
         'phone',
+        'callmebot_api_key',
         'address',
     ];
 

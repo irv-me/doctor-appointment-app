@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendAppointmentReminder;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class AppointmentController extends Controller
 {
@@ -53,7 +56,7 @@ class AppointmentController extends Controller
             'doctor_id.required'  => 'Debe seleccionar un doctor.',
         ]);
 
-        Appointment::create([
+        $appointment = Appointment::create([
             'patient_id' => $validated['patient_id'],
             'doctor_id'  => $validated['doctor_id'],
             'date'       => $validated['date'],
@@ -62,6 +65,19 @@ class AppointmentController extends Controller
             'reason'     => $validated['reason'] ?? null,
             'status'     => 1,
         ]);
+
+        // 1) Immediate WhatsApp confirmation
+        app(WhatsAppService::class)->sendConfirmation($appointment);
+
+        // 2) Schedule 24-hour reminder job — fires exactly 24h before start
+        $appointmentDateTime = Carbon::parse(
+            $appointment->date->format('Y-m-d') . ' ' . $appointment->start_time
+        );
+        $reminderAt = $appointmentDateTime->subDay();
+
+        if ($reminderAt->isFuture()) {
+            SendAppointmentReminder::dispatch($appointment)->delay($reminderAt);
+        }
 
         return redirect()->route('admin.appointments.index')
             ->with('swal', [
